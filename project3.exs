@@ -1,0 +1,1 @@
+TapestryDos.run(System.argv())
