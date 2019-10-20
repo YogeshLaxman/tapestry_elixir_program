@@ -1,8 +1,9 @@
 {application,tapestry_dos,
              [{applications,[kernel,stdlib,elixir,logger]},
               {description,"tapestry_dos"},
-              {modules,['Elixir.TapestryDos',
-                        'Elixir.TapestryDos.Application']},
+              {modules,['Elixir.TapestryDos','Elixir.TapestryDos.Application',
+                        'Elixir.TapestryDos.DynamicNodeSupervisor',
+                        'Elixir.TapestryDos.Node']},
               {registered,[]},
               {vsn,"0.1.0"},
               {mod,{'Elixir.TapestryDos.Application',[]}}]}.

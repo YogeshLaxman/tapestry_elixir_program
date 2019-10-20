@@ -17,7 +17,7 @@ end
 def start_main(:guide) do
   IO.puts("""
            Syntax Error. Please run the program using 
-           mix run project3.exs <Number of nodes> <Number of requests>
+           mix run project3.exs <Number of nodes> <Number of requpests>
            """)
 System.halt(0)
 end
@@ -26,10 +26,14 @@ def start_main({num_nodes,req}) do
   num_nodes = String.to_integer(num_nodes)
   req = String.to_integer(req)
   nodes = create_nodes (num_nodes)
+  IO.inspect(nodes)
 end
 
 defp create_nodes (num_nodes) do
-  Enum.map(1..num_node, fn _->
-    TapestryDos.DynamicNodeSupervisor.start_child_node())
+  Enum.map(1..num_nodes, fn _ -> 
+    TapestryDos.DynamicNodeSupervisor.start_child_nodes()
+  end)
+    #TapestryDos.DynamicNodeSupervisor.start_child_node())
+    #{:ok,pid} = TapestryDos.Node.start(4) |>IO.puts
 end
 end
