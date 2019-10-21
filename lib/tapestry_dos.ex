@@ -30,9 +30,10 @@ def start_main({num_nodes,req}) do
 end
 
 defp create_nodes (num_nodes) do
-  Enum.map(1..num_nodes, fn _ -> 
-    TapestryDos.DynamicNodeSupervisor.start_child_nodes()
+  Enum.map(1..num_nodes, fn x -> 
+    TapestryDos.DynamicNodeSupervisor.start_child_nodes(x)
   end)
+
     #TapestryDos.DynamicNodeSupervisor.start_child_node())
     #{:ok,pid} = TapestryDos.Node.start(4) |>IO.puts
 end

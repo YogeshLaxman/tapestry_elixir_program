@@ -9,8 +9,11 @@ defmodule TapestryDos.DynamicNodeSupervisor do
         DynamicSupervisor.init(strategy: :one_for_one)
     end
 
-    def start_child_nodes() do
-        {:ok, pid} =DynamicSupervisor.start_child(__MODULE__, TapestryDos.Node)
+    def start_child_nodes(x) do
+        {:ok, pid} =DynamicSupervisor.start_child(__MODULE__, %{
+            id: Stack,
+            start: {TapestryDos.Node, :start_link, [[x]]}
+          })
         pid
     end
 end
