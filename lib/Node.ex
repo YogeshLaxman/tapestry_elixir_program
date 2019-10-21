@@ -24,7 +24,7 @@ defmodule TapestryDos.Node do
     end
 
     def hash_of(number) do
-       hex_val = :crypto.hash(:sha, number) |> Base.encode16
+       hex_val = :crypto.hash(:sha, number |> Integer.to_string ) |> Base.encode16
        hex_val
     end
 end
