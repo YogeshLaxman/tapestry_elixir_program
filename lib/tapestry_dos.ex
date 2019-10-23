@@ -26,6 +26,9 @@ def start_main({num_nodes,req}) do
   num_nodes = String.to_integer(num_nodes)
   req = String.to_integer(req)
   nodes = create_nodes (num_nodes)
+ 
+  #TapestryDos.Routing.build_routing_tables(num_nodes)
+ 
   IO.inspect(nodes)
 end
 

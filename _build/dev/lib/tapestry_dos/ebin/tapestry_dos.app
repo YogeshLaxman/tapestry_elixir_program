@@ -3,7 +3,8 @@
               {description,"tapestry_dos"},
               {modules,['Elixir.TapestryDos','Elixir.TapestryDos.Application',
                         'Elixir.TapestryDos.DynamicNodeSupervisor',
-                        'Elixir.TapestryDos.Node']},
+                        'Elixir.TapestryDos.Node',
+                        'Elixir.TapestryDos.Routing']},
               {registered,[]},
               {vsn,"0.1.0"},
               {mod,{'Elixir.TapestryDos.Application',[]}}]}.
