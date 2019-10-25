@@ -26,9 +26,10 @@ def start_main({num_nodes,req}) do
   num_nodes = String.to_integer(num_nodes)
   req = String.to_integer(req)
   nodes = create_nodes (num_nodes)
- 
-  #TapestryDos.Routing.build_routing_tables(num_nodes)
- 
+  nodes_list = 1..num_nodes
+  actual_nodes_list = Enum.to_list(nodes_list)
+  TapestryDos.Routing.build_routing_tables(num_nodes)
+  #TapestryDos.RoutingTables.build_routing_tables(num_nodes)
   IO.inspect(nodes)
 end
 

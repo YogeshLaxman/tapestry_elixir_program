@@ -4,7 +4,9 @@
               {modules,['Elixir.TapestryDos','Elixir.TapestryDos.Application',
                         'Elixir.TapestryDos.DynamicNodeSupervisor',
                         'Elixir.TapestryDos.Node',
-                        'Elixir.TapestryDos.Routing']},
+                        'Elixir.TapestryDos.ProcessRouting',
+                        'Elixir.TapestryDos.Routing',
+                        'Elixir.TapestryDos.RoutingTables']},
               {registered,[]},
               {vsn,"0.1.0"},
               {mod,{'Elixir.TapestryDos.Application',[]}}]}.
