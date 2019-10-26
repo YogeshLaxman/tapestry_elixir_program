@@ -5,9 +5,9 @@ defmodule TapestryDos.ProcessRouting do
         hex_val
     end
 
-    def hello(node) do
+    def make_routing_table(node, node_num_list ) do
         dht_guid = hash_of node
-        guids = Enum.map(1..10000, fn n -> hash_of(n) end)
+        guids = Enum.map(node_num_list, fn n -> hash_of(n) end)
 
         Enum.map(0..39, fn level -> 
             Enum.map(0..15, fn column -> 
