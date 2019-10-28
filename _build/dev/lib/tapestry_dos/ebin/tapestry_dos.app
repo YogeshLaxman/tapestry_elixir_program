@@ -1,7 +1,7 @@
 {application,tapestry_dos,
              [{applications,[kernel,stdlib,elixir,logger]},
               {description,"tapestry_dos"},
-              {modules,['Elixir.TapestryDos','Elixir.TapestryDos.Application',
+              {modules,['Elixir.TapestryDos.Application',
                         'Elixir.TapestryDos.DynamicNodeSupervisor',
                         'Elixir.TapestryDos.Main','Elixir.TapestryDos.Node',
                         'Elixir.TapestryDos.ProcessRouting',

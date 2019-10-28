@@ -30,7 +30,7 @@ defmodule TapestryDos.State do
     end
 
     def handle_call({:end_of_task},_from,{nodes,req,count,max,request_per_node}) do
-        isCompleted = count >= req *nodes
+        isCompleted = count >= req * nodes
         {:reply,isCompleted,{nodes,req,count,max,request_per_node}}
     end
 
@@ -45,7 +45,6 @@ defmodule TapestryDos.State do
     
 
     def handle_call({:get_max}, _from, {nodes,req,count,max,request_per_node}) do
-         IO.puts "#{count}"
         {:reply,max,{nodes,req,count,max,request_per_node}}
     end 
 

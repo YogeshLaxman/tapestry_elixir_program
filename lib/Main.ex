@@ -60,18 +60,18 @@ defmodule TapestryDos.Main do
       Enum.each(1..num_nodes + add_nodes, fn n -> GenServer.cast(Map.get(updated_nodes_pid_map, "pid_#{n}"), {:kickoff}) end)
       
       wait_for_completion()
-
+      IO.puts("Max number of hops:")
       IO.puts TapestryDos.State.max()
-      
+      IO.puts("Task ended")
     end
     
     def wait_for_completion() do
     
         if TapestryDos.State.end_of_task() do
+           nil
+        else
             :timer.sleep(100)
             wait_for_completion()
-        else
-            nil
         end
     end
 
