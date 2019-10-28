@@ -26,7 +26,7 @@ defmodule TapestryDos.Main do
      # nodes_number = num_node
       num_nodes = String.to_integer(num_nodes)
       req = String.to_integer(req)
-      
+      IO.puts("Waiting for completion of Tapestry Protocol..");
       #Building a route map of all nodes and their routing tables
       routing_map = Enum.map(1..num_nodes, fn n -> {"rt_#{n}", TapestryDos.ProcessRouting.make_routing_table(n, 1..num_nodes)} end)
       routing_map = Enum.into(routing_map, %{})
@@ -58,16 +58,22 @@ defmodule TapestryDos.Main do
       all_guids = Enum.map(1..num_nodes + add_nodes, fn n -> TapestryDos.ProcessRouting.hash_of(n) end)
       Enum.each(1..num_nodes + add_nodes, fn n -> GenServer.cast(Map.get(updated_nodes_pid_map, "pid_#{n}"), {:update_routing_table, Map.get(updated_rt_map, "rt_#{n}"), hash_to_pid, all_guids}) end)
       Enum.each(1..num_nodes + add_nodes, fn n -> GenServer.cast(Map.get(updated_nodes_pid_map, "pid_#{n}"), {:kickoff}) end)
-
-
-      IO.puts "Waiting For Max Hops"
-
-      :timer.sleep(60_000)
+      
+      wait_for_completion()
 
       IO.puts TapestryDos.State.max()
       
     end
     
+    def wait_for_completion() do
+    
+        if TapestryDos.State.end_of_task() do
+            :timer.sleep(100)
+            wait_for_completion()
+        else
+            nil
+        end
+    end
 
 
 

@@ -34,7 +34,7 @@ defmodule TapestryDos.Node do
             msg_count
         else
             search_hash = Enum.random(list_nodes -- [hash_id])
-            GenServer.cast(Map.get(hash_to_pid, search_hash), {:search_node, search_hash, 0})
+            GenServer.cast(Map.get(hash_to_pid, search_hash), {:search_node, hash_id, 0})
             Process.send_after(self(), {:start}, 1000)
             msg_count + 1
         end
@@ -47,6 +47,7 @@ defmodule TapestryDos.Node do
 
     def handle_cast({:search_node, node_id, hop}, {hash_id, msg_count, routing_table, list_nodes, hash_to_pid, total_requests}) do
         common_length = common_length(hash_id, node_id, 0)
+        # IO.puts "Common Length : #{common_length}, #{hash_id}, #{node_id}"
 
         if common_length != 40 do
             next_node = Enum.at(Enum.at(routing_table, common_length), String.to_integer(String.at(node_id, common_length), 16))

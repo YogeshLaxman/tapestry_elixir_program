@@ -104,6 +104,7 @@ end
 
 def create_all_routing_table (nodes_list) do
   for node <- nodes_list do
+
     TapestryDos.Node.make_routing_table(node,nodes_list -- [node])
   end
 end

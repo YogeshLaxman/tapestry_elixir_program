@@ -1,58 +1,55 @@
 defmodule TapestryDos.State do
     use GenServer
-
-    @me __MODULE__
-
-
-    def start_link(num_nodes,num_requests) do
-        GenServer.start_link(@me,[num_nodes,num_requests], name: @me)
+    def start_link(nodes,req) do
+        GenServer.start_link(__MODULE__,[nodes,req], name: __MODULE__)
     end
 
-    def init([num_nodes, num_requests]) do
+    def init([nodes, req]) do
         count = 0
         max = 0
-        {:ok, {num_nodes,num_requests, count, max , %{}}}
+        {:ok, {nodes,req, count, max , %{}}}
     end
 
-    def is_completed() do
-        GenServer.call(@me,{:is_completed})
+    def end_of_task() do
+        GenServer.call(__MODULE__,{:end_of_task}, :infinity)
     end
 
-    @spec completed_requests :: any
+    @spec task_comp :: any
 
-    def completed_requests() do
-        GenServer.call(@me,{:completed_requests})
+    def task_comp() do
+        GenServer.call(__MODULE__,{:task_comp})
     end
 
     def max() do
-        GenServer.call(@me, {:get_max}, :infinity)
+        GenServer.call(__MODULE__, {:get_max}, :infinity)
     end
 
     def increase_count(number_of_hops) do
-        GenServer.cast(@me, {:completed, number_of_hops})
+        # IO.puts number_of_hops
+        GenServer.cast(__MODULE__, {:completed, number_of_hops})
     end
 
-    def handle_call({:is_completed},_from,{num_nodes,num_requests,count,max,request_per_node}) do
-        isCompleted = count == num_requests *num_nodes
-        {:reply,is_completed,{num_nodes,num_requests,count,max,request_per_node}}
+    def handle_call({:end_of_task},_from,{nodes,req,count,max,request_per_node}) do
+        isCompleted = count >= req *nodes
+        {:reply,isCompleted,{nodes,req,count,max,request_per_node}}
     end
 
     def handle_call(
-        {:completed_requests},
+        {:task_comp},
         _from,
-        {num_nodes,num_requests,count,max,request_per_node}
+        {nodes,req,count,max,request_per_node}
     )
     do
-        {:reply,count,{num_nodes,num_requests,count,max,request_per_node}}
+        {:reply,count,{nodes,req,count,max,request_per_node}}
     end
     
 
-    def handle_call({:get_max}, _from, {num_nodes,num_requests,count,max,request_per_node}) do
-        IO.puts "#{count}"
-        {:reply,max,{num_nodes,num_requests,count,max,request_per_node}}
+    def handle_call({:get_max}, _from, {nodes,req,count,max,request_per_node}) do
+         IO.puts "#{count}"
+        {:reply,max,{nodes,req,count,max,request_per_node}}
     end 
 
-    def handle_cast({:completed, number_of_hops}, {num_nodes,num_requests,count,max,request_per_node}) do
+    def handle_cast({:completed, number_of_hops}, {nodes,req,count,max,request_per_node}) do
         max = 
         if max < number_of_hops do
             number_of_hops
@@ -60,6 +57,6 @@ defmodule TapestryDos.State do
             max
         end
 
-        {:noreply,{num_nodes,num_requests,count + 1,max,request_per_node}}
+        {:noreply,{nodes,req,count + 1,max,request_per_node}}
     end
 end
