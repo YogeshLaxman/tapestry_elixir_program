@@ -1,1 +1,1 @@
-TapestryDos.run(System.argv())
+TapestryDos.Main.run(System.argv())
